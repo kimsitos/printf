@@ -1,39 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   ft_puthex_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/09 17:08:42 by stcozaci          #+#    #+#             */
-/*   Updated: 2025/10/23 14:33:50 by stcozaci         ###   ########.fr       */
+/*   Created: 2025/10/23 12:12:50 by stcozaci          #+#    #+#             */
+/*   Updated: 2025/10/23 14:33:47 by stcozaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	ft_puthex_fd(int nb, int fd, char *strhex)
 {
-	char	x;
+	int	nhex;
 
-	if (n == -2147483648)
+	nhex = 0;
+	if (nb == -2147483648)
 	{
-		write(fd, "-2147483648", 11);
+		write (fd, "-80000000", 9);
 		return ;
 	}
-	if (n < 0)
+	if (nb < 0)
 	{
-		write(fd, "-", 1);
-		ft_putnbr_fd(-n, fd);
+		nb *= -1;
+		write (fd, "-", 1);
 	}
-	else if (n > 9)
+	if (nb >= 16)
 	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putnbr_fd(n % 10, fd);
+		ft_puthex_fd(nb / 16, fd, strhex);
+		ft_puthex_fd(nb % 16, fd, strhex);
 	}
 	else
-	{
-		x = n + '0';
-		write(fd, &x, 1);
-	}
+		write (fd, &strhex[nb], 1);
 }
+
+// #include <stdio.h>
+
+// int main(void)
+// {
+// 	ft_puthex_fd(-2147483648, 1, "0123456789abcdef");
+// 	return 0;
+// }
