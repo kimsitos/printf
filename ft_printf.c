@@ -6,99 +6,69 @@
 /*   By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:44:29 by stcozaci          #+#    #+#             */
-/*   Updated: 2025/10/23 14:40:31 by stcozaci         ###   ########.fr       */
+/*   Updated: 2025/10/24 16:07:51 by stcozaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+
+static int	ft_put_nbr_nosign(unsigned int nbr)
 {
-	size_t		i;
-	const char	*temsrc;
-	char		*temdest;
+	int	len;
 
-	temsrc = (char *)src;
-	temdest = (char *)dest;
-	i = 0;
-	if (!src && !dest)
-		return (NULL);
-	while (i < n)
-	{
-		temdest[i] = temsrc[i];
-		i++;
-	}
-	return (dest);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	unsigned char		*temdest;
-	unsigned const char	*temsrc;
-
-	temdest = (unsigned char *)dest;
-	temsrc = (unsigned char *)src;
-	if (!src && !dest)
-		return (NULL);
-	if (temdest >= temsrc)
-	{
-		while (n--)
-			temdest[n] = temsrc[n];
-	}
-	else
-		ft_memcpy(dest, src, n);
-	return (dest);
-}
-
-static void	ft_put_nbr_nosign_fd(int nbr, int fd)
-{
-	if (nbr == -2147483648)
-	{
-		write (fd, "2147483648", 10);
-		return ;
-	}
-	else if (nbr < 0)
+	len = 0;
+	if (nbr < 0)
 		nbr *= -1;
-	ft_putnbr_fd(nbr, fd);
+	len += ft_putnbr(nbr);
+	return (len);
 }
 
 int	ft_printf(char const *str, ...)
 {
 	va_list	arg;
 	int		i;
+	int		len;
 
-	i = 0;
 	va_start(arg, str);
+	i = 0;
+	len = 0;
 	while (str[i])
 	{
-		if (str[i] == '%')
+		if (str[i] == '%' && str[i + 1])
 		{
 			if (str[i + 1] == '%')
-				write(1, "%", 1);
+				len += write(1, "%", 1);
 			else if (str[i + 1] == 'c')
-				ft_putchar_fd((char)va_arg(arg, int), 1);
+				len += ft_putchar((char)va_arg(arg, int));
 			else if (str[i + 1] == 's')
-				ft_putstr_fd(va_arg(arg, char *), 1);
+				len += ft_putstr(va_arg(arg, char *));
 			else if (str[i + 1] == 'p')
-				ft_putstr_fd((char *)va_arg(arg, void *), 1);
+				len += ft_putstr((char *)va_arg(arg, void *));
 			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
-				ft_putnbr_fd(va_arg(arg, int), 1);
+				len += ft_putnbr(va_arg(arg, int));
 			else if (str[i + 1] == 'u')
-				ft_put_nbr_nosign_fd(va_arg(arg, int), 1);
+				len += ft_put_nbr_nosign(va_arg(arg, unsigned int));
 			else if (str[i + 1] == 'x')
-				ft_puthex_fd(va_arg(arg, int), 1, "0123456789abcdef");
+				len += ft_puthex(va_arg(arg, long long), "0123456789abcdef");
 			else if (str[i + 1] == 'X')
-				ft_puthex_fd(va_arg(arg, int), 1, "0123456789ABCDEF");
+				len += ft_puthex(va_arg(arg, long), "0123456789ABCDEF");
 			i += 2;
 		}
-		write (1, &str[i], 1);
-		i++;
+		else
+		{
+			len += write (1, &str[i], 1);
+			i++;
+		}
 	}
-	return (0);
+	return (len);
 }
+
+#include <stdio.h>
 
 int main(void)
 {
-    ft_printf("%p", ft_memmove("hello", "world", 5));
-    return 0;
+	//ft_printf("%s", "hola");
+	printf("%lx", -2147483648);
+	return 0;
 }
