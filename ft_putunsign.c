@@ -1,24 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_putunsign.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/20 17:39:34 by stcozaci          #+#    #+#             */
-/*   Updated: 2025/10/24 16:46:26 by stcozaci         ###   ########.fr       */
+/*   Created: 2025/10/24 16:43:34 by stcozaci          #+#    #+#             */
+/*   Updated: 2025/10/24 16:53:29 by stcozaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
-# include <unistd.h>
-# include <stdarg.h>
+#include "ft_printf.h"
 
-int	ft_printf(char const *str, ...);
-int	ft_putchar(char c);
-int	ft_putstr(char *s);
-int	ft_putnbr(int n);
-int	ft_putunsign(unsigned int nb);
-int	ft_puthex(unsigned int nb, char *strhex);
-#endif
+int	ft_putunsign(unsigned int n)
+{
+	char	x;
+	int		len;
+
+	len = 0;
+	if (n > 9)
+	{
+		len += ft_putunsign(n / 10);
+		len += ft_putunsign(n % 10);
+	}
+	else
+	{
+		x = n + '0';
+		len += write(1, &x, 1);
+	}
+	return (len);
+}

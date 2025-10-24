@@ -6,13 +6,13 @@
 #    By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/23 13:28:15 by stcozaci          #+#    #+#              #
-#    Updated: 2025/10/24 15:41:24 by stcozaci         ###   ########.fr        #
+#    Updated: 2025/10/24 16:49:50 by stcozaci         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRC = ft_printf.c ft_putchar.c ft_puthex.c ft_putnbr.c ft_putstr.c 
+SRC = ft_printf.c ft_putchar.c ft_puthex.c ft_putnbr.c ft_putstr.c ft_putunsign.c
 
 CFLAGS = -Wall -Werror -extra
 
