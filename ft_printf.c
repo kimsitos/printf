@@ -6,11 +6,35 @@
 /*   By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:44:29 by stcozaci          #+#    #+#             */
-/*   Updated: 2025/10/24 16:55:51 by stcozaci         ###   ########.fr       */
+/*   Updated: 2025/10/27 11:44:00 by stcozaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+static int	ft_conversion(va_list arg, char funct)
+{
+	int	len;
+
+	len = 0;
+	if (funct == '%')
+		len += write(1, "%", 1);
+	else if (funct == 'c')
+		len += ft_putchar((char)va_arg(arg, int));
+	else if (funct == 's')
+		len += ft_putstr(va_arg(arg, char *));
+	else if (funct == 'p')
+		len += ft_putp(va_arg(arg, void *));
+	else if (funct == 'd' || funct == 'i')
+		len += ft_putnbr(va_arg(arg, int));
+	else if (funct == 'u')
+		len += ft_putunsign(va_arg(arg, unsigned int));
+	else if (funct == 'x')
+		len += ft_puthex(va_arg(arg, unsigned int), "0123456789abcdef");
+	else if (funct == 'X')
+		len += ft_puthex(va_arg(arg, unsigned int), "0123456789ABCDEF");
+	return (len);
+}
 
 int	ft_printf(char const *str, ...)
 {
@@ -25,22 +49,7 @@ int	ft_printf(char const *str, ...)
 	{
 		if (str[i] == '%' && str[i + 1])
 		{
-			if (str[i + 1] == '%')
-				len += write(1, "%", 1);
-			else if (str[i + 1] == 'c')
-				len += ft_putchar((char)va_arg(arg, int));
-			else if (str[i + 1] == 's')
-				len += ft_putstr(va_arg(arg, char *));
-			// else if (str[i + 1] == 'p')
-			// 	len += ft_putstr(va_arg(arg, void *));
-			else if (str[i + 1] == 'd' || str[i + 1] == 'i')
-				len += ft_putnbr(va_arg(arg, int));
-			else if (str[i + 1] == 'u')
-				len += ft_putunsign(va_arg(arg, unsigned int));
-			else if (str[i + 1] == 'x')
-				len += ft_puthex(va_arg(arg, unsigned int), "0123456789abcdef");
-			else if (str[i + 1] == 'X')
-				len += ft_puthex(va_arg(arg, unsigned int), "0123456789ABCDEF");
+			len += ft_conversion(arg, str[i + 1]);
 			i += 2;
 		}
 		else
@@ -52,11 +61,11 @@ int	ft_printf(char const *str, ...)
 	return (len);
 }
 
-#include <stdio.h>
+// #include <stdio.h>
 
-int main(void)
-{
-	//ft_printf("%s", "hola");
-	ft_printf("%u", -1);
-	return 0;
-}
+// int main(void)
+// {
+// 	//ft_printf("%s", "hola");
+// 	ft_printf("%p", -1);
+// 	return 0;
+// }
