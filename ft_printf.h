@@ -6,7 +6,7 @@
 /*   By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 17:39:34 by stcozaci          #+#    #+#             */
-/*   Updated: 2025/10/24 16:46:26 by stcozaci         ###   ########.fr       */
+/*   Updated: 2025/10/27 11:52:43 by stcozaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ int	ft_putchar(char c);
 int	ft_putstr(char *s);
 int	ft_putnbr(int n);
 int	ft_putunsign(unsigned int nb);
-int	ft_puthex(unsigned int nb, char *strhex);
+int	ft_puthex(unsigned long long nb, char *strhex);
 #endif
