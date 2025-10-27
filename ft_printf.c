@@ -6,7 +6,7 @@
 /*   By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 15:44:29 by stcozaci          #+#    #+#             */
-/*   Updated: 2025/10/27 11:44:00 by stcozaci         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:13:13 by stcozaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	ft_printf(char const *str, ...)
 
 // int main(void)
 // {
-// 	//ft_printf("%s", "hola");
-// 	ft_printf("%p", -1);
+// 	char s[] = "hello";
+// 	printf("%p\n", s);
+// 	ft_printf("%p", s);
 // 	return 0;
 // }

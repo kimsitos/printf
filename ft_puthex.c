@@ -6,7 +6,7 @@
 /*   By: stcozaci <stcozaci@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 12:12:50 by stcozaci          #+#    #+#             */
-/*   Updated: 2025/10/27 11:58:06 by stcozaci         ###   ########.fr       */
+/*   Updated: 2025/10/27 12:09:50 by stcozaci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_putp(void *addr)
 
 	len = 0;
 	nb = (unsigned long long) addr;
+	len += write(1, "0x", 2);
 	len += ft_puthex(nb, "0123456789abcdef");
 	return (len);
 }
